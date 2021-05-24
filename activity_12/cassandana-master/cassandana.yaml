@@ -1,0 +1,118 @@
+
+
+# number of process, recommended to equal number of cpu cores, 0 means all available cpu cores
+threads: 0
+
+
+
+# mqtt server 
+host: 0.0.0.0
+port: 1883
+
+    
+websocket:
+    enabled: no  
+    host: 0.0.0.0  
+    port: 8080
+
+
+ssl:
+    enabled: no
+    host: 0.0.0.0
+    port: 1884  
+
+
+wss:
+    enabled: no
+    host: 0.0.0.0
+    port: 8084  
+
+    
+    
+cert:
+    provider: JDK
+    key_manager_password: YOUR_PASSWORD
+    key_store_password: YOUR_PASSWORD
+    key_store_type: jks 
+    path: cert/cassandana.jks
+    client_auth: no
+    
+
+
+
+# permit: permit all users
+# deny: deny all users
+# database: use database to ask
+# http: use http rest api to ask
+# redis: use Redis rest api to ask can be used only for authentication
+# cache : in-memory cache for authentication and authorization to prevent performance degradation
+# expiration in seconds, default value is 3600 seconds (One hour) if set to zero, caching will be disabled. 
+security:
+    authentication: permit
+    acl: permit
+    
+    cache:
+        enabled: yes
+        expiration: 3600
+
+    # if REST API will be used as auth/acl backend
+    auth_url: http://127.0.0.1:9999/mqtt/auth 
+    acl_url: http://127.0.0.1:9999/mqtt/acl
+    
+
+
+
+#no to accept only client connetions with credentials
+#yes to accept client connection without credentails, validating only the one that provides
+allow_anonymous: yes
+
+#no to prohibit clients from connecting without a clientid.
+#yes to allow clients to connect without a clientid. One will be generated for them.
+allow_zero_byte_client_id: no
+
+
+
+reauthorize_subscriptions_on_connect: yes
+
+max_message_bytes: 8092
+
+
+# engine can be mysql, postgres, monogdb or cassandra
+database:
+    engine: mongodb
+    host: 127.0.0.1
+    port: 27017
+    username: 
+    password: 
+    name: cassandana
+
+
+
+# Redis connection info will be used if you enable Redis-based authentication
+redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 
+    
+
+
+epoll_enabled: no
+ 
+tcp:
+    so_backlog: 128
+    so_reuse_address: yes
+    tcp_nodelay: yes
+    so_keepalive: yes
+    timeout_seconds: 10
+    
+
+# MQTT Message archiver
+# Silo store all messages in bulk mode
+# interval in second means how many seconds it should wait to store messages in queue
+# count means on how many messages count, it should run archive messages phase
+silo:
+    enabled: no
+    interval: 5
+    count: 500
+
+
