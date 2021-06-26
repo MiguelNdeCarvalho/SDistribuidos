@@ -129,7 +129,7 @@ replicados obtém resultados que obedecem a critérios de correção
 
 - Sharding sem replicação
     - (+) Facilita a concorrência
-    - (-) Custo de validar restrições e calculos agregados
+    - (-) Custo de validar restrições e cálculos agregados
 - Réplica de shards
     - (+) Desempenho das Queries
     - (-) Custo das atualizações, validar restrições e complexidade do controlo de concorrência		
@@ -322,7 +322,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - Requer alterações no Kernel UNIX
     - O host do servidor é dedicado ao serviço AFS
 - Vantagens:
-    - Réplica read-only: guardadas em servidores seprados o que trás maior performance
+    - Réplica read-only: guardadas em servidores separados o que trás maior performance
     - Desempenho
         - Principal objetivo é a escalabilidade
         - Boa performance quando há um número elevado de utilizadores
@@ -406,7 +406,7 @@ replicados obtém resultados que obedecem a critérios de correção
 - Alta largura de banda tem prioridade sobre a baixa latência
 - Chunk: blocos de 64MB que são replicados por >=3 chunkservers
 - Mutação: escrita que ocorre em todas as réplicas do chunk
-- Gestão centralizada: Master - coordena acessos e controla metainformação
+- Gestão centralizada: Master - coordena acessos e controla meta-informação
 - Sem cache
 
 ### Google: GFS Análise
@@ -423,7 +423,7 @@ replicados obtém resultados que obedecem a critérios de correção
 ### Google: Chubby
 
 - Serviço para armazenamento de ficheiros pequenos que complementa o GFS
-- Serviço de sincronização distribuida
+- Serviço de sincronização distribuída
 - Serviço de eleição (por exemplo do chunkserver primário)
 - Serviço de nomes
 
@@ -436,7 +436,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - dados organizados em tabelas muito grandes	
 - Google analytics usa
     - Tabela com o sumário de cliques sobre páginas visitadas (análise com MapReduce)
-    - Optar por uma BD relacional distribuida teria inferior
+    - Optar por uma BD relacional distribuída teria inferior
     - Bigtable
 
 ### Google: Arquitetura Bigtable
@@ -450,13 +450,13 @@ replicados obtém resultados que obedecem a critérios de correção
 | Elemento | escolha de design                            | Base lógica                                                                                                                   | Troca                                                                         |
 |----------|----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
 | GFS      | Uso de um chunk grande                       | Adequa-se ao tamanho do ficheiro no GFS; Eficáz para leitura e anexos sequênciais grandes; Minimiza a quantidade de metadata; | Seria pouco eficiênte para acesso aleatório a pequenas partes do ficheiro     |
-|          | Uso de um master centralizado                | O master mantên a visão global que informa decisões gestão; Implementação simples;                                            | Unico ponto de falha                                                          |
-|          | Controlo e fluxos de dados separados         | Acesso a ficheiros de alto desempenho com o minimo envolvimento do master                                                     | Complica a biblioteca do cliente enquando lida com o master e os chunkservers |
+|          | Uso de um master centralizado                | O master mantêm a visão global que informa decisões de gestão; Implementação simples;                                            | Único ponto de falha                                                          |
+|          | Controlo e fluxos de dados separados         | Acesso a ficheiros de alto desempenho com o mínimo envolvimento do master                                                     | Complica a biblioteca do cliente enquanto lida com o master e os chunkservers |
 |          | Modelo consistênte de relaxamento            | Alto desempenho, explorando semânticas das operações GFS                                                                      | Os dados podem ser inconsistêntes                                             |
-| Chubby   | Combinação de aspeto e ficheiros abstratos   | Multiuso/universal                                                                                                            | Tem de perceber e diferenciar a diferença entre facetas                       |
-|          | Leitura e escreta de Whole-file              | Muito eficiênte para ficheiros pequenos                                                                                       | Inapropriado para ficheiro grandes                                            |
-|          | Caching do cliente com consistência rigorosa | Semanticas deterministicas                                                                                                    | Sobrecarga de gerir a consistência rigorosa                                   |
+| Chubby   | Combinação de aspeto e ficheiros abstratos   | Multiúso/universal                                                                                                            | Tem de perceber e diferenciar a diferença entre facetas                       |
+|          | Leitura e escrita de Whole-file              | Muito eficiênte para ficheiros pequenos                                                                                       | Inapropriado para ficheiro grandes                                            |
+|          | Caching do cliente com consistência rigorosa | Semânticas determinísticas                                                                                                    | Sobrecarga de gerir a consistência rigorosa                                   |
 | BigTable | Usa tabela de abstração                      | Suporte na eficiência de estruturas de dados                                                                                  | Menos expressividade que um BD relacional                                     |
-|          | Uso de um master centralizado                | Master com uma visão global; Implementação simples;                                                                           | Unico ponto de falha, possivel engarrafamento                                 |
-|          | Controlo e fluxos de dados separados         | Acesso a ficheiros de alto desempenho com o minimo envolvimento do master                                                     | -                                                                             |
-|          | Monitorar e carregar o balanceamento         | Pode ter clientes em paralelo                                                                                                 | Sobrecarga associada com gestão de estados globais                            |
+|          | Uso de um master centralizado                | Master com uma visão global; Implementação simples;                                                                           | Único ponto de falha, possível engarrafamento                                 |
+|          | Controlo e fluxos de dados separados         | Acesso a ficheiros de alto desempenho com o mínimo envolvimento do master                                                     | -                                                                             |
+|          | Monitorizar e carregar o balanceamento         | Pode ter clientes em paralelo                                                                                                 | Sobrecarga associada com gestão de estados globais                            |
