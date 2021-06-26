@@ -374,8 +374,8 @@ replicados obtém resultados que obedecem a critérios de correção
 ### Google: Infraestrutura - Elementos por camadas
 
 - Comunicação
-    - Direta / invocação remota / senilização: **Protocol Buffers**
-    Assíncrona, grande nº de subscritores: Google **publish-subscribe**
+    - Direta / invocação remota / serialização: **Protocol Buffers**
+    - Assíncrona, grande nº de subscritores: Google **publish-subscribe**
 - Armazenamento, coordenação e acesso a dados
     - GFS: SFD específico da google
     - Chubby: coordenação e algum armazenamento
