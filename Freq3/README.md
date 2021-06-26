@@ -99,7 +99,7 @@ replicados obtém resultados que obedecem a critérios de correção
 
 ## Arquitetura Gossip
 
-- Os RMs podem ficar temporariamente desligados, sofrem updates individualmente e quando se voltam a ligam trocam mensagens com as atualizações.
+- Os RMs podem ficar temporariamente desligados, sofrem updates individualmente e quando se voltam a ligar e trocam mensagens com as atualizações.
 - Garantias:
     - cada cliente observa respostas consistentes ao longo do tempo
     - as atualizações são feitas por ordem cronológica
@@ -253,8 +253,8 @@ replicados obtém resultados que obedecem a critérios de correção
 - No servidor
     - Mantidos em memória
     - Refletir escrita imediatamente no disco?
-		- 1. Write-through caching: atualizar memória e disco antes de responder ao cliente
-		- 2. Delayed commit/write: escrever apenas na cache em memória e mais tarde é que é realizada a sincronização com o disco
+		- 1- Write-through caching: atualizar memória e disco antes de responder ao cliente
+		- 2- Delayed commit/write: escrever apenas na cache em memória e mais tarde é que é realizada a sincronização com o disco
 - No cliente
     - As operações tem todas cache para reduzir os pedidos ao servidor e o tráfego na rede
 	- O estado de um ficheiro ativo é atualizado com o servidor a cada 3s
