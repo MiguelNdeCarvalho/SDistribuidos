@@ -1,10 +1,10 @@
 # Replicação
 
-## Definição
+## Replicação: Definição
 
 Contribui para o desempenho, alta disponibilidade e tolerância a falhas (ex.: cache, redundância de módulos (software + hardware).
 
-## Vantagens
+## Replicação: Vantagens
 
 - Ganho de desempenho
     - Cache de dados mais perto do cliente;
@@ -25,7 +25,7 @@ Contribui para o desempenho, alta disponibilidade e tolerância a falhas (ex.: c
             - resolvido através de **2N+1** servidores
             - a resposta válida é da maioria dos servidores
 
-## Requísitos
+## Replicação: Requísitos
 
 - transparência
     - do ponto de vista do cliente, tudo deve funcionar como se existisse uma única réplica
@@ -33,7 +33,7 @@ Contribui para o desempenho, alta disponibilidade e tolerância a falhas (ex.: c
     - quando as operações efetuadas sobre um conjunto de objetos
 replicados obtém resultados que obedecem a critérios de correção
 
-## Modelo Geral
+## Replicação: Modelo Geral
 
 - **Replica Manager (RM)**: módulo ou servidor que contém as replicas, que comunicam entre si, cada RM contém uma replica de tudo ou parte dos dados
 - **Operações dos Clientes**: somente operações de leitura e de alteração
@@ -43,12 +43,12 @@ replicados obtém resultados que obedecem a critérios de correção
     - **Casual**: se o pedido (a um RM) para r aconteceu antes do pedido para r', então RM tratará r antes de r'
     - **Total**: se um RM consistente trata r antes de r', então todos os RM consistentes tratarão r antes de r'
 
-## Comunicação em Grupo
+## Replicação: Comunicação em Grupo
 
 - A troca de mensagens com os RM é mais eficaz através de comunicação em grupo (multicast)
 - **Multicast**: envia pedidos para vário sítios ao mesmo tempo
 
-## Réplicas e consistência
+## Replicação: Réplicas e consistência
 
 - Critérios de consistência
     - **Consistência sequêncial**: não usa referências temporais mas usa uma ordem (sequência)
@@ -56,13 +56,13 @@ replicados obtém resultados que obedecem a critérios de correção
         - a sequência permite alcançar uma única cópia correta dos objetos
         - a ordem das operações na sequência está de acordo com o tempo real a que efetivamente ocorreram
 
-## Replicação e tolerância a falhas
+## Replicação: Tolerância a falhas
 
 - Modelos de replicação para tolerância a falhas
     - replicação passiva
     - replicação ativa
 
-### Replicação passiva
+### Replicação: Replicação passiva
 
 - Existe um único RM primário e vários secundários
 - Frontend comunica apenas com o RM primário
@@ -78,7 +78,7 @@ replicados obtém resultados que obedecem a critérios de correção
 - Desvantagem:
     - lentidão entre RM primário e RMs de backup
 
-### Replicação ativa
+### Replicação: Replicação ativa
 
 - RM têm igual função e estão organizados como um grupo
 - Frontend envia o pedido por multicast aos RMs
@@ -91,13 +91,13 @@ replicados obtém resultados que obedecem a critérios de correção
     - tolera **falhas do tipo crash**
     - tolera **falhas bizantinas**, com 2N+1 RM
 
-## Serviços de alta disponibilidade
+## Replicação: Serviços de alta disponibilidade
 
 - objetivo: proporcionar aos clientes o acesso ao serviço, com melhor tempo de resposta, ou seja, minimizar os tempos de resposta
 - exemplos:
     - Arquitetura **gossip**
 
-## Arquitetura Gossip
+## Replicação: Arquitetura Gossip
 
 - Os RMs podem ficar temporariamente desligados, sofrem updates individualmente e quando se voltam a ligar e trocam mensagens com as atualizações.
 - Garantias:
@@ -155,7 +155,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - Block module
     - Device module
 
-## Requisitos
+## SFD: Requisitos
 
 - Transparência
 - Controlo de concorrência
@@ -166,12 +166,12 @@ replicados obtém resultados que obedecem a critérios de correção
 - Segurança
 - Eficiência
 
-## Existentes (pré 2000)
+## SFD: Existentes (pré 2000)
 
 - Sun Network File System (NFS)
 - Andrew File System (AFS)
 
-## Componentes do serviço de ficheiros
+## SFD: Componentes do serviço de ficheiros
 
 - Serviço flat file
     - operações sobre o conteúdo dos ficheiro com um identificador único (UFIDs)
@@ -182,7 +182,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - Executado em cada computador cliente
     - Guarda informação sobre a localização na rede dos serviços de diretorias e flat file
 
-## Operações do Serviço Flat File
+## SFD: Operações do Serviço Flat File
 
 - Read
 - Write
@@ -194,7 +194,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - Os direitos do utilizador são validados com o modo de acesso especificado na operação open
 	- Verificação dos direitos de acesso efetua-se no servidor onde cada pedido inclui a identificação do utilizador
 
-## Operações do Serviço de Diretorias
+## SFD: Operações do Serviço de Diretorias
 
 - Lookup
 - AddName
@@ -202,7 +202,7 @@ replicados obtém resultados que obedecem a critérios de correção
 - GetNames
 
 
-## Sun NFS
+## SFD: NFS: Sun NFS
 
 - Protocolo NFS:
     - Remote Procedure Calls (RPCs) que permite aos clientes trabalhar com ficheiros remotos e que é independente do Sistema Operativo
@@ -211,14 +211,14 @@ replicados obtém resultados que obedecem a critérios de correção
 - Os pedidos sobre ficheiros remotos são traduzidos pelo módulo cliente em operações do protocolo NFS e passados ao servidor que detém esses ficheiros
 - Podem exigir-se credencias de identificação
 
-### VFS (Sistema de Ficheiros Virtual)
+### SFD: NFS: VFS (Sistema de Ficheiros Virtual)
 
 - Faz a integração entre o sistema de ficheiros local e o remoto
 - Em NFS os identificadores dos ficheiros são **file handles**
 - VFS contém um v-node por ficheiro aberto
 - Cliente NFS é integrado no Kernel
 
-### Controlo de acesso e autenticação
+### SFD: NFS: Controlo de acesso e autenticação
 
 - Servidor stateless	
 - Servidor tem de validar a identidade do utilizador junto dos atributos de acesso do ficheiro a cada pedido
@@ -226,7 +226,7 @@ replicados obtém resultados que obedecem a critérios de correção
 - Tem um problema de segurança na versão básica, um utilizador podia alterar o uid passado por RPC
 - Solução: Utilização de encriptação DES (Data Encryption Standard) da informação de autenticação do utilizador
 
-### Interface do servidor NFS
+### SFD: NFS: Interface do servidor NFS
 
 - Lookup
 - Create
@@ -244,11 +244,11 @@ replicados obtém resultados que obedecem a critérios de correção
 - Reddir
 - Stafs
 
-### NFS: Sistema de ficheiros local e remoto acessíveis
+### SFD: NFS: Sistema de ficheiros local e remoto acessíveis
 
 - Mount Service: permite montar parte de um file system remoto por um cliente
 
-### NFS: Cache
+### SFD: NFS: Cache
 
 - No servidor
     - Mantidos em memória
@@ -259,7 +259,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - As operações tem todas cache para reduzir os pedidos ao servidor e o tráfego na rede
 	- O estado de um ficheiro ativo é atualizado com o servidor a cada 3s
 
-### NFS: Considerações sobre desempenho
+### SFD: NFS: Considerações sobre desempenho
 
 - Transparência de acesso e localização, tolerância a falhas
 - O servidor é stateless permitindo retornar o funcionamento após um crash
@@ -268,7 +268,7 @@ replicados obtém resultados que obedecem a critérios de correção
     - Sensível à latência da rede
     - Desempenho relativamente inferior na operação write se usar write-through no servidor
 
-## Andrew File System (AFS)
+## SFD: Andrew File System (AFS)
 
 - Acesso transparente a ficheiros partilhados remotos com o NFS
 - O acesso aos ficheiros faz-se através das primitivas UNIX
@@ -277,35 +277,36 @@ replicados obtém resultados que obedecem a critérios de correção
     - Whole-file serving: transmite o conteúdo inteiro de ficheiro e diretorias
     - Whole-file caching: o cliente faz uma cache que permanece após um crash do cliente
 
-### AFS: Funcionamento
+### SFD: AFS: Funcionamento
 
 - Quando um utilizador abre um ficheiro remoto que não tem uma réplica local, o servidor respetivo é localizado e envia uma cópia. 
 - A cópia é armazenada no file system do cliente e aberto, sendo devolvido ao utilizador o respetivo file descriptor UNIX. 
 - As operações de leitura e escrita ocorrem sobre essa réplica. 
 - Ao fechar um ficheiro se o conteúdo da réplica foi alterado a mesma é enviada ao servidor file system que a contém
 
-### AFS: Processos
+### SFD: AFS: Processos
 
 - **Vice**: software que corre do lado do servidor
 - **Venus**: software que corre do lado do cliente
 
-### Identificação de System Calls sobre ficheiros remotos
+### SFD: AFS: Identificação de System Calls sobre ficheiros remotos
 
 - O Kernel UNIX interceta system calls sobre partilhados e passa-as ao processo Venus
 
-### AFS: Implementação 
+### SFD: AFS: Implementação 
+
 - Open
 - Read
 - Write
 - Close
 
-### AFS: Consistência
+### SFD: AFS: Consistência
 
 - Callback promise: garantia de Vice para Venus de que notificará a atualização do ficheiro sempre que outro cliente o alterar
     - Armazenadas do lado do cliente, junto à réplica do ficheiro
     - São revistas quando o servidor recebe uma operação close de um ficheiro atualizado
 
-### AFS: Componentes de service interface vice
+### SFD: AFS: Componentes de service interface vice
 
 - Fetch
 - Store
@@ -316,7 +317,7 @@ replicados obtém resultados que obedecem a critérios de correção
 - RemoveCallback
 - BreakCallback
 
-### AFS: Outros aspetos
+### SFD: AFS: Outros aspetos
 
 - Desvantagens:
     - Requer alterações no Kernel UNIX
@@ -330,7 +331,7 @@ replicados obtém resultados que obedecem a critérios de correção
 
 ## GFS
 
-### SFD pré-GFS (Google File System): Desenvolvimentos posteriores
+### GFS: SFD pré-GFS (Google File System): Desenvolvimentos posteriores
 
 - Mecanismos de armazenamento:
     - RAID (Redundant Arrays of Inexpensive Disk)
@@ -340,7 +341,8 @@ replicados obtém resultados que obedecem a critérios de correção
 
 ### Google: Motor de pesquisa
 
-- A partir de uma pesquisa obter uma lista ordenada de documentos web		- Crawling: localizar e obter conteúdo de documentos web		
+- A partir de uma pesquisa obter uma lista ordenada de documentos web
+- Crawling: localizar e obter conteúdo de documentos web		
 - GoogleBot: agente que lê documentos, recolhe URL que referem e avança - recursivamente para os documentos apontados por esses endereços
 - Indexação: indexar o conteúdo dos documentos (HTML, PDF, DOC,...)
 - Ranking: ordenação do resultado pela importância relativamente à pesquisa
